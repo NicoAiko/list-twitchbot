@@ -23,6 +23,8 @@
 
     <v-flex xs3>
       <v-text-field dark label="Name" v-model="input"></v-text-field>
+      <v-text-field dark label="Arena ID" v-model="arenaIDInput" @change="updateArena"></v-text-field>
+      <v-text-field dark label="Arena Password" v-model="arenaPasswordInput" @change="updateArena"></v-text-field>
       <v-btn color="success" @click="addToList">Add</v-btn>
     </v-flex>
     <v-snackbar
@@ -51,6 +53,8 @@ import { Client } from '../classes/Client';
 export default class Overview extends Vue {
   private client: Client;
   private input: string;
+  private arenaIDInput: string;
+  private arenaPasswordInput: string;
   private snackbar: boolean = false;
   private snackbarText: string = '';
   private username: string;
@@ -60,6 +64,8 @@ export default class Overview extends Vue {
   constructor() {
     super();
     this.input = '';
+    this.arenaIDInput = '';
+    this.arenaPasswordInput = '';
     this.username = process.env.VUE_APP_USERNAME as string;
     this.password = process.env.VUE_APP_PASSWORD as string;
     this.channel = process.env.VUE_APP_CHANNEL as string;
@@ -73,6 +79,18 @@ export default class Overview extends Vue {
 
   get listNames() {
     return this.client.getUserlist().getList();
+  }
+
+  get arenaId() {
+    return this.client.getArenaId();
+  }
+
+  get arenaPassword() {
+    return this.client.getArenaPassword();
+  }
+
+  private updateArena() {
+    this.client.setArenaData(this.arenaIDInput, this.arenaPasswordInput);
   }
 
   private showSnackbar(text: string): void {
@@ -99,6 +117,7 @@ export default class Overview extends Vue {
       this.client.getUserlist().getList()[index] = temp;
       this.$forceUpdate();
     } catch (error) {
+      // tslint:disable-next-line no-console
       console.error(error);
     }
   }

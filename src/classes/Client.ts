@@ -21,6 +21,8 @@ export class Client {
   private password: string;
   private username: string;
   private list: Userlist;
+  private arenaId: string;
+  private arenaPassword: string;
 
   constructor(options: IClient) {
     this.client = null;
@@ -28,6 +30,8 @@ export class Client {
     this.password = options.password;
     this.channel = options.channel;
     this.list = new Userlist();
+    this.arenaId = '';
+    this.arenaPassword = '';
 
     const opts = {
       identity: {
@@ -64,6 +68,19 @@ export class Client {
 
   public getUserlist(): Userlist {
     return this.list;
+  }
+
+  public getArenaId(): string {
+    return this.arenaId;
+  }
+
+  public getArenaPassword(): string {
+    return this.arenaPassword;
+  }
+
+  public setArenaData(id: string, password: string): void {
+    this.arenaId = id;
+    this.arenaPassword = password;
   }
 
   public isConnected(): boolean {
@@ -141,6 +158,9 @@ export class Client {
         }
 
         this.client.say(target, `@${sender}: You are at position #${position + 1}.`);
+        break;
+      case '!arena':
+        this.client.say(target, `ID: ${this.arenaId} - Passwort: ${this.arenaPassword}`);
         break;
       default:
         break;
