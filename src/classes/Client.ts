@@ -160,6 +160,7 @@ export class Client {
         this.client.say(target, `@${sender}: You are at position #${position + 1}.`);
         break;
       case '!arena':
+      case '!id':
         this.client.say(target, `ID: ${this.arenaId} - Passwort: ${this.arenaPassword}`);
         break;
       default:
