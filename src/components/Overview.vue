@@ -25,6 +25,7 @@
       <v-text-field dark label="Name" v-model="input"></v-text-field>
       <v-text-field dark label="Arena ID" v-model="arenaIDInput" @change="updateArena"></v-text-field>
       <v-text-field dark label="Arena Password" v-model="arenaPasswordInput" @change="updateArena"></v-text-field>
+      <v-text-field dark label="Tournament Bracket Link" v-model="tournamentBracketLink" @change="updateBracket"></v-text-field>
       <v-btn color="success" @click="addToList">Add</v-btn>
     </v-flex>
     <v-snackbar
@@ -55,6 +56,7 @@ export default class Overview extends Vue {
   private input: string;
   private arenaIDInput: string;
   private arenaPasswordInput: string;
+  private tournamentBracketLink: string;
   private snackbar: boolean = false;
   private snackbarText: string = '';
   private username: string;
@@ -66,6 +68,7 @@ export default class Overview extends Vue {
     this.input = '';
     this.arenaIDInput = '';
     this.arenaPasswordInput = '';
+    this.tournamentBracketLink = '';
     this.username = process.env.VUE_APP_USERNAME as string;
     this.password = process.env.VUE_APP_PASSWORD as string;
     this.channel = process.env.VUE_APP_CHANNEL as string;
@@ -91,6 +94,10 @@ export default class Overview extends Vue {
 
   private updateArena() {
     this.client.setArenaData(this.arenaIDInput, this.arenaPasswordInput);
+  }
+
+  private updateBracket() {
+    this.client.setTournamentBracketLink(this.tournamentBracketLink);
   }
 
   private showSnackbar(text: string): void {
