@@ -11,6 +11,7 @@ let win: Electron.BrowserWindow | null;
 
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true });
+
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({ width: 800, height: 600 });
