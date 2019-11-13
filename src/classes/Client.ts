@@ -1,4 +1,4 @@
-import { client as TMIClient } from 'tmi.js';
+import { Client as TMIClient } from 'tmi.js';
 import { Userlist } from './Userlist';
 
 interface IClient {
@@ -36,6 +36,10 @@ export class Client {
     this.tournamentBracketLink = '';
 
     const opts = {
+      connection: {
+        secure: true,
+        reconnect: true,
+      },
       identity: {
         username: this.username,
         password: this.password,
@@ -197,6 +201,11 @@ export class Client {
         break;
       case '!arena':
       case '!id':
+        if (!this.arenaId || !this.arenaPassword) {
+          this.client.say(target, 'Aktuell ist keine Arena eingestellt.');
+          break;
+        }
+
         this.client.say(target, `ID: ${this.arenaId} - Passwort: ${this.arenaPassword}`);
         break;
       case '!bracket':
